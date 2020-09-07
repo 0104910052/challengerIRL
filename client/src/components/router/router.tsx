@@ -14,6 +14,7 @@ import {useCookies} from "react-cookie";
 import { logout as logoutStore } from '../../store/authSlice';
 import logoutIcon  from '../../assets/logout.svg'
 import NavProfile from "./nav-profile";
+import Login from "../auth/login";
 
 const Router = () => {
 
@@ -44,7 +45,14 @@ const Router = () => {
 
                         </div>
                         <div className="form-inline mx-5 my-lg-0">
-                            { !auth.isAuthed && <Link to="/auth/register">Register</Link> }
+                            { !auth.isAuthed &&
+                                <div>
+                                    <Link to="/auth/register">Register</Link>
+                                    <div className={'d-inline px-2 nav-divider'}>|</div>
+                                    <Link to="/auth/login">Login</Link>
+
+                                </div>
+                            }
                             { auth.isAuthed &&
                                 < NavProfile />
                             }
@@ -56,7 +64,9 @@ const Router = () => {
                         <Route path="/auth/register">
                             <Register />
                         </Route>
-
+                        <Route path="/auth/login">
+                            <Login />
+                        </Route>
                     </Switch>
                 </div>
             </DomRouter>

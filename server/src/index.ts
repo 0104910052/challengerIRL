@@ -1,8 +1,9 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import { register } from './routes/auth.route'
 import  session from 'express-session'
 import {user} from "./routes/user.route";
+import { register } from "./routes/auth/register.route";
+import {login} from "./routes/auth/login.route";
 
 
 const express = require('express')
@@ -64,6 +65,7 @@ const main = async () => {
     )
 
     register(app);
+    login(app)
     user(app)
 
 

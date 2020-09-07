@@ -9,8 +9,7 @@ export const slice = createSlice({
         isAuthed: false,
     },
     reducers: {
-        login: (state, action) => {
-            console.log(action.payload.user)
+        login: (state) => {
             state.isAuthed = true
         },
         setIsAuthed: (state, action) => {

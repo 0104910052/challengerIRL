@@ -14,19 +14,16 @@ const NavProfile = () => {
     const history = useHistory()
     const dispatch = useDispatch()
 
-    const logout = () =>{
+    const removeAllCookies = () => {
+        document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+    }
 
-        removeCookie('qid')
+    const logout = async () =>{
         dispatch(logoutStore())
         dispatch(resetData())
         history.push('/')
     }
 
-    // eg asdere
-
-    const t = () => {
-
-    }
 
     return (
         <div className={'nav-profile'}>

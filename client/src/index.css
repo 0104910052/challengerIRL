@@ -44,3 +44,8 @@ code {
 .nav-profile{
   font-weight: 500;
 }
+
+.nav-divider{
+  font-size: 15px;
+  color: #6f6f6f;
+}
