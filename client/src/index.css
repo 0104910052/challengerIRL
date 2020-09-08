@@ -67,3 +67,22 @@ code {
   font-weight: 500;
   font-size: 1.3rem;
 }
+
+.text-align-left{
+  text-align: left;
+}
+
+.text-italic{
+  font-style: italic;
+}
+
+.text-85{
+  font-size: .85rem;
+}
+
+.attention-wrap{
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 10px 6px -6px #e3e3e3;
+}

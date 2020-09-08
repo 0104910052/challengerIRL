@@ -23,14 +23,14 @@ const Router = () => {
 
     useEffect(()=>{
         const isInAuthRoute = location.pathname.split('/')[1] === 'auth'
+        //
+        // if(auth.isAuthed && isInAuthRoute){
+        //     history.push('/dashboard')
+        // }
 
-        if(auth.isAuthed && isInAuthRoute){
-            history.push('/dashboard')
-        }
-
-        if(!auth.isAuthed && !isInAuthRoute){
-            history.push('/auth/login')
-        }
+        // if(!auth.isAuthed && !isInAuthRoute){
+        //     history.push('/auth/login')
+        // }
 
     }, [location.pathname, auth.isAuthed])
 
@@ -81,13 +81,13 @@ const Router = () => {
                     <Route path="/auth/login">
                         <Login />
                     </Route>
-                    <Route path="/dashboard">
+                    <Route exact path="/dashboard">
                         <Dashboard />
                     </Route>
-                    <Route path="/challenges">
+                    <Route exact path="/challenges">
                         <Challenges />
                     </Route>
-                    <Route path="/challenges/add">
+                    <Route exact path="/challenges/add">
                         <AddChallenge />
                     </Route>
                 </Switch>
