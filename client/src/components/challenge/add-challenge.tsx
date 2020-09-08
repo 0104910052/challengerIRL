@@ -30,7 +30,7 @@ const AddChallenge = () => {
 
     const onSubmit = (e: any) => {
         e.preventDefault()
-        axios.post('http://localhost:4000/challenges/add', {title, type, cutoff}, {withCredentials: true})
+        axios.post('http://localhost:4000/challenges/add', {title, type: type.value, cutoff}, {withCredentials: true})
             .then(res=>{
                 console.log(res)
             })
