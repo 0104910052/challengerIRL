@@ -1,4 +1,4 @@
-import {BaseEntity, Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 import {Challenge} from "./Challenge";
 
 @Entity()
@@ -6,9 +6,6 @@ export class User extends BaseEntity{
 
     @PrimaryGeneratedColumn('uuid')
     id: number;
-
-    @OneToMany(type => Challenge, challenge => challenge.owner)
-    challenges: Challenge[]
 
     @Column()
     name: string;
@@ -19,6 +16,7 @@ export class User extends BaseEntity{
     @Column()
     password: string;
 
-
+    @OneToMany(type => Challenge, challenge => challenge.user)
+    challenges: Challenge[];
 
 }

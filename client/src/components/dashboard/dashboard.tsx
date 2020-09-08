@@ -1,10 +1,17 @@
-import React from 'react';
-import {useSelector} from "react-redux";
-import {selectUserData} from "../../store/userSlice";
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {getChallenges, selectUserData} from "../../store/userSlice";
 import diamond from '../../assets/rank_diamond.png'
+import Challenges from '../challenge/challenges';
 
 const Dashboard = () => {
     const { user } = useSelector(selectUserData).user
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+       dispatch(getChallenges())
+    },[])
+
     console.log(user)
 
     return (
@@ -29,6 +36,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
+                <Challenges />
             </div>
         </div>
     );

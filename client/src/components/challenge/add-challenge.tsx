@@ -1,12 +1,17 @@
 import React, {useState} from 'react';
 import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import axios from 'axios'
+import { addChallenge } from '../../store/userSlice';
+import {useDispatch} from "react-redux";
+import { useHistory } from 'react-router-dom';
 
 const AddChallenge = () => {
 
     const [type, setType] = useState({value: 'additive'})
     const [cutoff, setCutoff] = useState(0)
     const [title, setTitle] = useState('')
+    const dispatch = useDispatch()
+    const history = useHistory()
 
     const onRadioChange = (e:any) => {
         setType({value: e.target.name})
@@ -32,7 +37,10 @@ const AddChallenge = () => {
         e.preventDefault()
         axios.post('http://localhost:4000/challenges/add', {title, type: type.value, cutoff}, {withCredentials: true})
             .then(res=>{
-                console.log(res)
+                if(res.data.success){
+                    dispatch(addChallenge(res.data.challenge))
+                    history.push('/dashboard')
+                }
             })
             .catch(err=>{
                 console.log(err)

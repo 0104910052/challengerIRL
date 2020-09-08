@@ -1,4 +1,4 @@
-import {BaseEntity, Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "./User";
 
 @Entity()
@@ -7,8 +7,8 @@ export class Challenge extends BaseEntity{
     @PrimaryGeneratedColumn('uuid')
     id: number;
 
-    @ManyToOne(type => User, owner => owner.challenges)
-    owner: User;
+    @ManyToOne(type => User, user => user.challenges)
+    user: User;
 
     @Column()
     type: string;
@@ -18,7 +18,4 @@ export class Challenge extends BaseEntity{
 
     @Column()
     title: string;
-
-
-
 }

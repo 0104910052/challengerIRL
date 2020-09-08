@@ -86,3 +86,27 @@ code {
   border: 1px solid #eaeaea;
   box-shadow: 0 10px 6px -6px #e3e3e3;
 }
+
+.challenges{
+  height: 25vh;
+}
+
+.challenge{
+  border: 1px solid #d0d0d0;
+  background-color: #f3f3f3;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.challenge:hover{
+  filter: brightness(90%);
+}
+
+.challenge-title{
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+.challenge-div-img{
+  width: 6rem;
+}

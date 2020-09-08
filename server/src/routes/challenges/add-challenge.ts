@@ -8,16 +8,16 @@ export const addChallenge =  ( app: Application ) => {
     app.post( "/challenges/add", async ( req: Request, res: Response ) => {
         console.log(req.body)
         const challenge = Challenge.create({
-            owner: req.session.userId,
+            user: req.session.userId,
             title: req.body.title,
             type: req.body.type,
             cutoff: parseInt(req.body.cutoff)
         })
             .save()
-            .then(c=>{
-                return res.json(c)
+            .then((challenge: any)=>{
+                return res.json({success: true, challenge})
             })
-            .catch(e=>{
+            .catch((e:Error)=>{
                 console.log(e)
             })
     } );

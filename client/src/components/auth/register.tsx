@@ -42,11 +42,10 @@ const Register = () => {
                 console.log(res.data)
                 if(res.data.success){
                     dispatch(login())
-                    dispatch(setUser({user: res.data.user}))
+                    dispatch(setUser({user: res.data.user.user}))
                     history.push('/dashboard')
                 }else{
                     console.log(res.data.errors)
-                    // setErrors(errorsDefault)
                     setErrors({...errorsDefault, ...res.data.errors})
                     console.log(errors)
                 }

@@ -5,38 +5,53 @@ import {setIsAuthed} from "./authSlice";
 export const slice = createSlice({
     name: 'data',
     initialState: {
-        user: {}
+        user: {},
+        challenges: [{}]
     },
     reducers: {
         setUser: (state, action) => {
-            state.user = action.payload.user
+            state.user = action.payload
         },
         resetData: (state) =>{
             state.user = {}
-        }
+        },
+        addChallenge: (state, action) =>{
+            state.challenges.push(action.payload)
+        },
+        setChallenges: (state, action) => {
+            state.challenges = action.payload
+        },
+
 
     },
 });
 
-export const { setUser, resetData } = slice.actions;
+export const { setUser, resetData, addChallenge, setChallenges } = slice.actions;
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
-export const getUserData = () => (dispatch:any) => {
-
-
-    axios.get('http://localhost:4000/user',  {withCredentials: true} )
+export const getChallenges = () => (dispatch:any) => {
+    axios.get('http://localhost:4000/challenges',  {withCredentials: true} )
         .then((res)=>{
-            dispatch(setUser(res.data))
-            dispatch(setIsAuthed({isAuthed: true}))
+            if(res.data.success){
+                dispatch(setChallenges(res.data.challenges))
+            }
+
         })
 };
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state) => state.counter.value)`
+
+export const getUserData = () => (dispatch:any) => {
+    axios.get('http://localhost:4000/user',  {withCredentials: true} )
+        .then((res)=>{
+            console.log(res.data)
+            dispatch(setUser(res.data.user))
+            dispatch(setChallenges(res.data.challenges))
+            dispatch(setIsAuthed({isAuthed: true}))
+        })
+        .catch(e=>{
+            console.log(e)
+        })
+};
+
 export const selectUserData = (state: any)  => state;
 
 export default slice.reducer;
