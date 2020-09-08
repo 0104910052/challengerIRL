@@ -21,6 +21,7 @@ const NavProfile = () => {
     const logout = async () =>{
         dispatch(logoutStore())
         dispatch(resetData())
+        removeAllCookies()
         history.push('/')
     }
 

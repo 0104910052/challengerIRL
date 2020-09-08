@@ -49,3 +49,21 @@ code {
   font-size: 15px;
   color: #6f6f6f;
 }
+
+.dash-side-title{
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.dash-side{
+  border-right: 1px solid #d9d9d9;
+}
+
+.dash-side-rank-img{
+  width: 10rem;
+}
+
+.dash-side-rank-text{
+  font-weight: 500;
+  font-size: 1.3rem;
+}

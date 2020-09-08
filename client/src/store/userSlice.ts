@@ -9,8 +9,6 @@ export const slice = createSlice({
     },
     reducers: {
         setUser: (state, action) => {
-            console.log('called')
-            console.log(action.payload.user)
             state.user = action.payload.user
         },
         resetData: (state) =>{
@@ -31,7 +29,6 @@ export const getUserData = () => (dispatch:any) => {
 
     axios.get('http://localhost:4000/user',  {withCredentials: true} )
         .then((res)=>{
-            // console.log(res.data)
             dispatch(setUser(res.data))
             dispatch(setIsAuthed({isAuthed: true}))
         })

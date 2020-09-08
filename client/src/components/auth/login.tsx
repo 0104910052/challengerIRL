@@ -32,11 +32,8 @@ const Login = () => {
 
     const handleSubmit = (e:any) =>{
         e.preventDefault()
-        console.log('sub')
         axios.post('http://localhost:4000/auth/login', {mail: mail, password: password}, {withCredentials: true})
             .then((res)=>{
-                console.log('res')
-                console.log(res)
                 if(res.data.success){
                     dispatch(login())
                     dispatch(getUserData())
