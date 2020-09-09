@@ -13,6 +13,7 @@ import Dashboard from "../dashboard/dashboard";
 import {Link} from "react-router-dom";
 import AddChallenge from "../challenge/add-challenge";
 import Challenges from "../challenge/challenges";
+import Challenge from '../challenge/challenge';
 
 const Router = () => {
 
@@ -47,13 +48,10 @@ const Router = () => {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item active">
-                                <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                                <a onClick={()=> history.push('/dashboard')} className="nav-link">Dashboard <span className="sr-only">(current)</span></a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Features</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">Pricing</a>
+                                <a onClick={()=>history.push('/challenges')} className="nav-link">Challenges</a>
                             </li>
                         </ul>
 
@@ -89,6 +87,9 @@ const Router = () => {
                     </Route>
                     <Route exact path="/challenges/add">
                         <AddChallenge />
+                    </Route>
+                    <Route exact path="/challenge/:id">
+                        <Challenge />
                     </Route>
                 </Switch>
             </div>

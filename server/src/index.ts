@@ -6,6 +6,7 @@ import { register } from "./routes/auth/register.route";
 import {login} from "./routes/auth/login.route";
 import {addChallenge} from "./routes/challenges/add-challenge";
 import {getChallenges} from "./routes/challenges/get-challenges";
+import {addChallengeEntry} from "./routes/challenges/add-challenge-entry";
 
 
 const express = require('express')
@@ -71,7 +72,7 @@ const main = async () => {
     user(app)
     addChallenge(app)
     getChallenges(app)
-
+    addChallengeEntry(app)
 
     if(process.env.production){
 

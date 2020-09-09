@@ -4,7 +4,7 @@ import {Challenge} from "../entity/Challenge";
 
 
 export const getUserChallenges = async (userId: string): Promise<Challenge[]> => {
-    return await Challenge.find({ where: {user: userId}})
+    return await Challenge.find({ relations: ['challengeEntries'], where: {user: userId}})
 }
 
 export const user =  ( app: Application ) => {
@@ -20,6 +20,12 @@ export const user =  ( app: Application ) => {
                     return res.json({ user, challenges })
                 }
                 return res.json({success: false})
+            })
+            .catch(e=>{
+                console.log(e)
+            })
+            .finally(()=>{
+                return res.status(500)
             })
     });
 
