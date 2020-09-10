@@ -11,7 +11,7 @@ export class ChallengeEntry extends BaseEntity{
     @ManyToOne(type => Challenge, challenge => challenge.challengeEntries)
     challenge: Challenge;
 
-    @Column()
+    @Column({type: 'real'})
     value: number;
 
     @Column()

@@ -9,6 +9,10 @@ const Challenge = () => {
 
     const location = useLocation()
     const [challenge, setChallenge ] = useState({
+        rank: {
+            totalElo: 0,
+            division: ''
+        },
         title: '',
         type: '',
         cutoff: 0,
@@ -29,7 +33,7 @@ const Challenge = () => {
                     if(res.data.challenge.type === 'abstinence'){
                         setEntryValue(-1)
                     }
-                    console.log(challenge.challengeEntries)
+                    console.log(challenge)
                 }
             })
             .catch(e=>{
@@ -38,7 +42,7 @@ const Challenge = () => {
     }, [])
 
     const onEntryValueChange = (e: any) => {
-        if(e !== ''){
+        if(e !== '' && !isNaN(e.target.value)){
             setEntryValue(e.target.value)
         }else{
             setEntryValue(0)
@@ -49,6 +53,7 @@ const Challenge = () => {
 
     const onSubmit = (e: any) => {
         e.preventDefault()
+
         axios.post('http://localhost:4000/challenges', {challengeId, value: entryValue, date: entryDate}, {withCredentials: true})
             .then(res=>{
                 console.log(res)
@@ -68,6 +73,9 @@ const Challenge = () => {
                     {challenge.type}
                     <div>
                         cutoff: {challenge.cutoff}
+                    </div>
+                    <div>
+
                     </div>
                 </div>
             </div>

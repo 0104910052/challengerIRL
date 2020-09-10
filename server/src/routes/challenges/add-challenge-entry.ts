@@ -1,7 +1,7 @@
 import { Request, Response, Application } from 'express';
 import {Challenge} from "../../entity/Challenge";
 import {ChallengeEntry} from "../../entity/ChallengeEntry";
-import {calculateEloForNewEntry, getChallengeEntries} from "./challenge-utils";
+import {calculateEloForNewEntry, getChallengeEntries} from "./logic/challenge-logic";
 
 
 
@@ -10,13 +10,15 @@ export const addChallengeEntry =  ( app: Application ) => {
     app.post( "/challenges", async ( req: Request, res: Response ) => {
         console.log(req.body)
 
-        const elo = await calculateEloForNewEntry(req.body.challengeId, req.body.value);
+        const challenge = await Challenge.findOne({id: req.body.challengeId})
+
+        const elo = await calculateEloForNewEntry(challenge, req.body.value);
 
         console.log(elo)
 
         ChallengeEntry.create({
             challenge: req.body.challengeId,
-            value: req.body.value,
+            value: +req.body.value,
             date: req.body.date,
             eloGain: elo
         })
