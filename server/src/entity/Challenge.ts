@@ -15,7 +15,7 @@ import {ChallengeEntry} from "./ChallengeEntry";
 export class Challenge extends BaseEntity{
 
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
     @ManyToOne(type => User, user => user.challenges)
     user: User;

@@ -2,6 +2,7 @@ import { Request, Response, Application } from 'express';
 import { getUserChallenges } from '../user.route';
 import {Challenge} from "../../entity/Challenge";
 import {ChallengeEntry} from "../../entity/ChallengeEntry";
+import {getChallengeRank} from "./challenge-utils";
 
 
 
@@ -25,13 +26,20 @@ export const getChallenges =  ( app: Application ) => {
 
     app.get( "/challenges/:id", async ( req: Request, res: Response ) => {
         const challenge = await Challenge.findOne({relations: ['user'], where: {id: req.params.id}})
-        console.log(challenge)
         if(challenge && challenge.user.id !== req.session.userId){
             return res.status(403)
         }
 
+        const rank = getChallengeRank(challenge.id)
+
+
         let c = challenge
         delete c.user
+
+        const challengeEntries = await ChallengeEntry.find({where: {challenge: req.params.id}})
+        c.challengeEntries = challengeEntries
+
+
 
         return res.json({
             success: true,

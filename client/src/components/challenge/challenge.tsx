@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'
 import { useLocation } from 'react-router-dom';
-import {Button, Form, FormFeedback, FormGroup, Input, Label} from 'reactstrap';
+import {Button, Form, FormFeedback, FormGroup, Input, Label, ListGroup, ListGroupItem} from 'reactstrap';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -11,10 +11,10 @@ const Challenge = () => {
     const [challenge, setChallenge ] = useState({
         title: '',
         type: '',
-        cutoff: 0
+        cutoff: 0,
+        challengeEntries: [{}]
     })
     const [challengeId, setChallengeId] = useState('')
-    const [challengeEntries, setChallengeEntries] = useState([])
     const [entryDate, setEntryDate] = useState<Date | null | [Date, Date]>(new Date());
 
     const [entryValue, setEntryValue] = useState(0)
@@ -26,6 +26,10 @@ const Challenge = () => {
             .then(res=>{
                 if(res.data.success){
                     setChallenge(res.data.challenge)
+                    if(res.data.challenge.type === 'abstinence'){
+                        setEntryValue(-1)
+                    }
+                    console.log(challenge.challengeEntries)
                 }
             })
             .catch(e=>{
@@ -40,6 +44,7 @@ const Challenge = () => {
             setEntryValue(0)
         }
     }
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 
     const onSubmit = (e: any) => {
@@ -47,6 +52,8 @@ const Challenge = () => {
         axios.post('http://localhost:4000/challenges', {challengeId, value: entryValue, date: entryDate}, {withCredentials: true})
             .then(res=>{
                 console.log(res)
+                console.log(res.data.entries)
+                setChallenge({...challenge, challengeEntries: res.data.entries})
             })
             .catch(e=>{
                 console.log(e)
@@ -59,6 +66,9 @@ const Challenge = () => {
                 <h3>{challenge.title}</h3>
                 <div>
                     {challenge.type}
+                    <div>
+                        cutoff: {challenge.cutoff}
+                    </div>
                 </div>
             </div>
 
@@ -66,10 +76,20 @@ const Challenge = () => {
                 <legend className={'mt-4'}>Add entry</legend>
                 <div className={'col-2 offset-5 text-align-left'}>
                     <Form onSubmit={onSubmit}>
-                        <FormGroup>
-                            <Label for="mail" className={'m-0'}>Value</Label>
-                            <Input  onChange={onEntryValueChange} type="text" name="entryValue" />
-                        </FormGroup>
+                        {
+                            challenge.type !== 'abstinence' &&
+                            <FormGroup>
+                                <Label for="mail" className={'mt-2'}>Value</Label>
+                                <Input  onChange={onEntryValueChange} type="text" name="entryValue" />
+                            </FormGroup>
+                        }
+                        {
+                            challenge.type === 'abstinence' &&
+                            <FormGroup>
+                                <Label for="i" className={'mt-2 text-danger text-115'}>Abstinence interrupted</Label>
+                            </FormGroup>
+                        }
+
                         <FormGroup>
                             <div>
                                 <Label for="mail" className={'m-0'}>Date</Label>
@@ -79,6 +99,25 @@ const Challenge = () => {
                         <Button type={'submit'} className={'my-4'} block color="primary" disabled={entryValue === 0}>Add entry</Button>
                     </Form>
                 </div>
+            </div>
+            <div className={'col-2 offset-5'}>
+                <legend>Entries</legend>
+                <ListGroup>
+                {
+                        challenge.challengeEntries.map((e:any)=>{
+                            return (
+                                <ListGroupItem>
+                                        <div>
+                                            {e.value}
+                                        </div>
+                                    <div>
+                                        {e.date && new Date(e.date).toLocaleDateString("en-US", dateOptions)}
+                                    </div>
+                                </ListGroupItem>
+                            )
+                        })
+                    }
+                </ListGroup>
             </div>
         </div>
     );

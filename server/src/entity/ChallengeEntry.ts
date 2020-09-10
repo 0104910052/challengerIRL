@@ -16,4 +16,7 @@ export class ChallengeEntry extends BaseEntity{
 
     @Column()
     date: Date;
+
+    @Column()
+    eloGain: number;
 }
