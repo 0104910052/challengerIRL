@@ -42,7 +42,6 @@ export const getChallenges = () => (dispatch:any) => {
 export const getUserData = () => (dispatch:any) => {
     axios.get('http://localhost:4000/user',  {withCredentials: true} )
         .then((res)=>{
-            console.log(res.data)
             dispatch(setUser(res.data.user))
             dispatch(setChallenges(res.data.challenges))
             dispatch(setIsAuthed({isAuthed: true}))

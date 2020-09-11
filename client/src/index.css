@@ -84,6 +84,10 @@ code {
   font-size: 1.15rem;
 }
 
+.text-135{
+  font-size: 1.35rem;
+}
+
 .attention-wrap{
   background-color: #f1f1f1;
   border-radius: 3px;
@@ -113,4 +117,37 @@ code {
 
 .challenge-div-img{
   width: 6rem;
+}
+
+.rank-wrapper{
+  width: 12rem;
+}
+
+.rank-border{
+  transform: translateY(-1.3rem) translateX(-.07rem);
+  width: 12.15rem;
+}
+
+.rank-image{
+  padding-top: 3rem;
+  width: 10rem;
+
+}
+
+
+.rank-inner-wrapper{
+
+  padding-top: 2rem;
+  border-left: 4px solid #3e3e3e;
+  border-right: 4px solid #3e3e3e;
+  padding-bottom: 3rem;
+}
+
+.rank-div-text{
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.rank-title{
+  padding-top: 1.5rem;
 }
