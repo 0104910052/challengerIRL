@@ -74,11 +74,10 @@ const main = async () => {
     getChallenges(app)
     addChallengeEntry(app)
 
+
+
     if(process.env.production){
-
     }
-
-    //
 
 
     app.listen( 4000, () => {
