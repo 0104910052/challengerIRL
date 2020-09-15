@@ -1,38 +1,17 @@
-import {Challenge} from "../entity/Challenge";
-import {ChallengeEntry} from "../entity/ChallengeEntry";
-import {calculateEloForNewAdditiveEntry, getAdditiveChallengeRank} from "./additive/entry-additive.logic";
 import {divisions, higherDivisions, MASTER_CUTOFF, MAX_ELO} from "./logic.config";
 
 
 
 
-
-export const calculateEloForNewEntry = (challenge: Challenge, value: number) => {
-    if(challenge.type === 'additive'){
-        return calculateEloForNewAdditiveEntry(challenge, value)
-    }
-}
-
-
-export const getChallengeRank = async (challenge: Challenge) => {
-    let rank = {}
-
-    if(challenge.type === 'additive'){
-        rank = await getAdditiveChallengeRank(challenge)
-    }
-    return rank
-}
-
-
 export const calculateDivision = (elo: number) => {
-
 
 
     const divisionEloRange = MASTER_CUTOFF / divisions.length
 
-    if(elo < (divisionEloRange / 4)) {
-        return 'Unranked'
+    if(elo < divisionEloRange) {
+        return 'Iron IV'
     }
+
 
     const divisionIndex = Math.round(elo / divisionEloRange) - 1
     let division: string
@@ -54,6 +33,5 @@ export const calculateDivision = (elo: number) => {
     }else{
         division = divisions[divisionIndex]
     }
-
     return division
 }

@@ -40,7 +40,8 @@ const EloHistory: React.FC<Challenge> = ({challengeEntries, onEntryDelete}:Chall
                         let rowBgColor: string
 
                         if(entry.eloGain > 0){
-                            const percent = entry.eloGain / 2000 * 30
+                            const progressBalancer = 30
+                            const percent = entry.eloGain / 2000 * (entry.eloGain > 35 ? progressBalancer / 1.5 : progressBalancer)
                             rowBgColor = `rgba(64, 255, 0, ${percent})`
                         }else{
                             const percent = (entry.eloGain * -1) / 2000 * 20

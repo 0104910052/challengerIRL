@@ -50,7 +50,7 @@ const RankImage: React.FC<Rank> = ({ challenge, onChallengeDelete }: Rank) => {
                                <div>
                                    <b className={'text-135'}>{division ? division: 'Unranked'}</b>
                                    <div>
-                                       {division? <b>{totalElo} LP</b> : 'Good luck'}
+                                       {division? <b>{Number(totalElo).toFixed(0)} LP</b> : 'Good luck'}
                                    </div>
                                </div>
                            </div>

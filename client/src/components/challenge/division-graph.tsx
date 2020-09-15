@@ -1,6 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import {Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {calculateDivision} from "../../logic/challenge-logic";
 
 interface Challenge {
     challengeEntries: any[];
@@ -10,21 +11,22 @@ interface Challenge {
 
 const DivisionGraph: FC<Challenge> = ({challengeEntries, createdAt}: Challenge) => {
 
+    let options = {
+        year: "2-digit",
+        month: "2-digit",
+        day: "numeric"
+    };
 
-    const getDiffInDays = (baseDay: Date, offsetDay: Date):number =>{
-        const diff = Math.abs(new Date(baseDay).getTime() - new Date(offsetDay).getTime());
-        return  Math.ceil(diff / (1000 * 3600 * 24));
-    }
-
-    const [data, setData] = useState<{ x: number, y: number }[]>([])
+    const [data, setData] = useState<{ time: number, elo: number }[]>([])
 
     useEffect(()=>{
 
         if(challengeEntries && challengeEntries.length > 0){
             let sortedEntries: Map<string, number> = new Map()
+            challengeEntries.reverse()
             if(challengeEntries.length > 1){
                 for(let i = 0; i < challengeEntries.length; i++){
-                    const dateString = challengeEntries[i].date.split('T')[0]
+                    const dateString = new Date(challengeEntries[i].date).toDateString()
                     if(sortedEntries.has(dateString)){
                         sortedEntries.set(dateString, sortedEntries.get(dateString) + challengeEntries[i].eloGain)
                     }else{
@@ -33,16 +35,19 @@ const DivisionGraph: FC<Challenge> = ({challengeEntries, createdAt}: Challenge) 
                 }
             }
 
-            console.log(sortedEntries)
 
-            let plotData: { x: number, y: number }[] = []
+            let plotData: { time: string, elo: number }[] = []
+
+            let sum = 0;
+
             sortedEntries.forEach((value, key)=>{
                 plotData.push({
-                    x: getDiffInDays(createdAt, new Date(key)),
-                    y: value
+                    time: new Date(key).toLocaleDateString("en-US", options),
+                    elo: Math.floor((sum + value))
                 })
+                sum += value
             })
-            setData(plotData)
+            setData(plotData as any)
         }
 
     },[challengeEntries])
@@ -51,36 +56,31 @@ const DivisionGraph: FC<Challenge> = ({challengeEntries, createdAt}: Challenge) 
         <div className={'mt-5'}>
             <h3>Division graph</h3>
 
+            {
+                challengeEntries.length > 1  &&
+                <ResponsiveContainer width={350} height={400}>
+                    <AreaChart data={data}>
+                        <XAxis dataKey="time" height={80} label={'Date'}/>
+                        <YAxis dataKey="elo" tickFormatter={(elo)=>{
+                            const div = calculateDivision(elo)
+                            if(div === 'Unranked'){
+                                return ''
+                            }else{
+                                return div
+                            }
 
-            <ResponsiveContainer width={350} height={300}>
-                <AreaChart data={data}>
-                    <XAxis dataKey="x" height={80} label={'Days elapsed'}/>
-                    <YAxis dataKey="y" />
-                    <Tooltip label={'Days'} />
-                    <Area
-                        type="monotone"
-                        dataKey="y"
-                        name="Elo gain"
-                        stroke="rgb(63, 191, 191)"
-                        fill="rgba(63, 191, 191, 0.1)"
-                    />
-                </AreaChart>
-            </ResponsiveContainer>
-
-            {/*<LineChart*/}
-            {/*    width={400}*/}
-            {/*    height={400}*/}
-            {/*    data={data}*/}
-            {/*    margin={{ top: 5, right: 20, left: 10, bottom: 5 }}*/}
-            {/*>*/}
-
-            {/*    <XAxis dataKey="name" />*/}
-            {/*    <Tooltip />*/}
-            {/*    <CartesianGrid stroke="#f5f5f5" />*/}
-            {/*    <Line type="monotone" dataKey="y" stroke="#ff7300" yAxisId={0} />*/}
-            {/*</LineChart>*/}
-
-
+                        } } />
+                        <Tooltip label={'Days'} />
+                        <Area
+                            type="monotone"
+                            dataKey="elo"
+                            name="Elo gain"
+                            stroke="rgba(37, 237, 237, 0.7)"
+                            fill="rgba(37, 237, 237, 0.1)"
+                        />
+                    </AreaChart>
+                </ResponsiveContainer>
+            }
         </div>
     );
 };
