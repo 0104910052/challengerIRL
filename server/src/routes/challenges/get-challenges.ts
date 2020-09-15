@@ -38,7 +38,7 @@ export const getChallenges =  ( app: Application ) => {
         let c:any  = challenge
         delete c.user
 
-        const challengeEntries = await ChallengeEntry.find({where: {challenge: req.params.id}})
+        const challengeEntries = await ChallengeEntry.find({where: {challenge: req.params.id}, order: {date: 'ASC'}})
         c.challengeEntries = challengeEntries
 
 

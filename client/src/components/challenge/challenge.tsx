@@ -6,11 +6,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import RankImage from "../generic/rank-image";
 import EloHistory from './histsory';
 import InputValue from "./input-value";
+import DivisionGraph from "./division-graph";
 
 const Challenge = () => {
 
     const location = useLocation()
     const [challenge, setChallenge ] = useState({
+        createdAt: new Date(),
         division: {
             totalElo: 0,
             division: ''
@@ -72,8 +74,7 @@ const Challenge = () => {
                 <div className={'col-2 offset-1 p-0'}>
 
                     <div className="row">
-                        <EloHistory challengeEntries={challenge.challengeEntries}  />
-                        <InputValue onSubmit={onSubmit} challenge={challenge}/>
+                        <DivisionGraph challengeEntries={challenge.challengeEntries} createdAt={challenge.createdAt}/>
                     </div>
                 </div>
 
