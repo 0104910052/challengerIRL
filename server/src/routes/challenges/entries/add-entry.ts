@@ -1,11 +1,12 @@
 import { Request, Response, Application } from 'express';
-import {Challenge} from "../../entity/Challenge";
-import {ChallengeEntry} from "../../entity/ChallengeEntry";
-import {calculateEloForNewEntry, getChallengeEntries} from "./logic/challenge-logic";
+import {Challenge} from "../../../entity/Challenge";
+import {ChallengeEntry} from "../../../entity/ChallengeEntry";
+import {calculateEloForNewEntry} from "../../../logic/challenge-logic";
+import {getChallenge} from "../../../logic/challenge-general";
 
 
 
-export const addChallengeEntry =  ( app: Application ) => {
+export const addEntry =  (app: Application ) => {
 
     app.post( "/challenges", async ( req: Request, res: Response ) => {
         console.log(req.body)
@@ -25,10 +26,10 @@ export const addChallengeEntry =  ( app: Application ) => {
             .save()
             .then( async (e)=>{
                 if(e){
-                    const entries = await getChallengeEntries(req.body.challengeId)
+                    const challenge = await getChallenge(req.body.challengeId, true)
                     return res.json({
                         success: true,
-                        entries
+                        challenge
                     })
                 }
                 return res.status(403)

@@ -4,9 +4,10 @@ import  session from 'express-session'
 import {user} from "./routes/user.route";
 import { register } from "./routes/auth/register.route";
 import {login} from "./routes/auth/login.route";
-import {addChallenge} from "./routes/challenges/add-challenge";
-import {getChallenges} from "./routes/challenges/get-challenges";
-import {addChallengeEntry} from "./routes/challenges/add-challenge-entry";
+import {addChallenge} from "./routes/challenges/challenge/add-challenge";
+import {getChallenges} from "./routes/challenges/challenge/get-challenges";
+import {addEntry} from "./routes/challenges/entries/add-entry";
+import {removeEntry} from "./routes/challenges/entries/remove-entry";
 
 
 const express = require('express')
@@ -72,8 +73,8 @@ const main = async () => {
     user(app)
     addChallenge(app)
     getChallenges(app)
-    addChallengeEntry(app)
-
+    addEntry(app)
+    removeEntry(app)
 
 
     if(process.env.production){

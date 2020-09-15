@@ -30,8 +30,8 @@ const Challenge = () => {
 
         axios.post('http://localhost:4000/challenges', {challengeId, value: entryValue, date: entryDate}, {withCredentials: true})
             .then(res=>{
-                setChallenge({...challenge, challengeEntries: res.data.entries})
-                console.log(challenge)
+                setChallenge(res.data.challenge)
+                console.log(res.data)
             })
             .catch(e=>{
                 console.log(e)
@@ -39,6 +39,14 @@ const Challenge = () => {
     }
 
 
+    const onEntryDelete = (entryId: string) => {
+        axios.delete('http://localhost:4000/challenges/entry/' + entryId, {withCredentials: true})
+            .then(res=>{
+                if(res.data.success){
+                    setChallenge(res.data.challenge)
+                }
+            })
+    }
 
 
     useEffect(()=>{
@@ -48,6 +56,7 @@ const Challenge = () => {
             .then(res=>{
                 if(res.data.success){
                     console.log(res.data.challenge)
+                    console.log(res.data)
                     setChallenge(res.data.challenge)
 
                 }
@@ -60,27 +69,23 @@ const Challenge = () => {
     return (
         <div className={'container-fluid'}>
             <div className={'row'}>
-
                     <div className={'col-3'}>
                         <RankImage challenge={challenge} />
                     </div>
                     <div className={'col-4 offset-1 p-0'}>
 
                         <div className="row">
-                            <EloHistory challengeEntries={challenge.challengeEntries}  />
-                            <InputValue onSubmit={onSubmit} challenge={challenge}/>
+                            <EloHistory onEntryDelete={onEntryDelete} challengeEntries={challenge.challengeEntries}  />
                         </div>
                     </div>
                 <div className={'col-2 offset-1 p-0'}>
 
                     <div className="row">
                         <DivisionGraph challengeEntries={challenge.challengeEntries} createdAt={challenge.createdAt}/>
+                        <InputValue onSubmit={onSubmit} challenge={challenge}/>
                     </div>
                 </div>
-
             </div>
-
-
         </div>
     );
 };

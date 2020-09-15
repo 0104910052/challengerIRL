@@ -1,5 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries} from 'react-vis';
+import { Doughnut } from 'react-chartjs-2';
+import {Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 
 interface Challenge {
     challengeEntries: any[];
@@ -19,7 +20,7 @@ const DivisionGraph: FC<Challenge> = ({challengeEntries, createdAt}: Challenge) 
 
     useEffect(()=>{
 
-        if(challengeEntries.length > 0){
+        if(challengeEntries && challengeEntries.length > 0){
             let sortedEntries: Map<string, number> = new Map()
             if(challengeEntries.length > 1){
                 for(let i = 0; i < challengeEntries.length; i++){
@@ -49,17 +50,35 @@ const DivisionGraph: FC<Challenge> = ({challengeEntries, createdAt}: Challenge) 
     return (
         <div className={'mt-5'}>
             <h3>Division graph</h3>
-            {
-                <XYPlot
-                    width={400}
-                    height={300}>
-                    <HorizontalGridLines />
-                    <LineSeries
-                        data={data}/>
-                    <XAxis />
-                    <YAxis />
-                </XYPlot>
-            }
+
+
+            <ResponsiveContainer width={350} height={300}>
+                <AreaChart data={data}>
+                    <XAxis dataKey="x" height={80} label={'Days elapsed'}/>
+                    <YAxis dataKey="y" />
+                    <Tooltip label={'Days'} />
+                    <Area
+                        type="monotone"
+                        dataKey="y"
+                        name="Elo gain"
+                        stroke="rgb(63, 191, 191)"
+                        fill="rgba(63, 191, 191, 0.1)"
+                    />
+                </AreaChart>
+            </ResponsiveContainer>
+
+            {/*<LineChart*/}
+            {/*    width={400}*/}
+            {/*    height={400}*/}
+            {/*    data={data}*/}
+            {/*    margin={{ top: 5, right: 20, left: 10, bottom: 5 }}*/}
+            {/*>*/}
+
+            {/*    <XAxis dataKey="name" />*/}
+            {/*    <Tooltip />*/}
+            {/*    <CartesianGrid stroke="#f5f5f5" />*/}
+            {/*    <Line type="monotone" dataKey="y" stroke="#ff7300" yAxisId={0} />*/}
+            {/*</LineChart>*/}
 
 
         </div>

@@ -1,5 +1,5 @@
 import { Request, Response, Application } from 'express';
-import {Challenge} from "../../entity/Challenge";
+import {Challenge} from "../../../entity/Challenge";
 
 
 

@@ -41,8 +41,10 @@ const InputValue: React.FC<InputValueProps> = ({onSubmit, challenge}:InputValueP
 
     return (
         <div className={'col-12'}>
-                <legend className={'mt-4'}>Add entry</legend>
-                <div className={'col-6 text-align-left'}>
+            <h3 className={'mt-5'}>Add new entry</h3>
+
+                <div className={'col-12 text-align-left'}>
+
                     <Form onSubmit={submit}>
                         {
                             challenge.type !== 'abstinence' &&

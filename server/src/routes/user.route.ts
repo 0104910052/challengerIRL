@@ -11,7 +11,6 @@ export const user =  ( app: Application ) => {
 
     /* Get all data for user */
     app.get( "/user", async ( req: Request, res: Response ) => {
-        console.log(req.session.userId)
         await User.findOne({id: req.session.userId})
             .then(async (u)=>{
                 if(u){

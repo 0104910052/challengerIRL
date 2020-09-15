@@ -1,6 +1,7 @@
-import {Challenge} from "../../../../entity/Challenge";
+import {Challenge} from "../../entity/Challenge";
 import {ELO_REDUCTION_RATE, MAX_ELO} from "../logic.config";
-import {calculateDivision,  getChallengeEntries} from "../challenge-logic";
+import {calculateDivision} from "../challenge-logic";
+import {getChallengeEntries} from "../challenge-general";
 
 
 const getScore = (currentTotalValue: number, maxValue: number) => {

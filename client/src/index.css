@@ -151,3 +151,14 @@ code {
 .rank-title{
   padding-top: 1.5rem;
 }
+
+.history-delete-icon{
+  width: .9rem;
+  filter: invert(30%);
+  cursor: pointer;
+}
+
+.history-delete-icon:hover{
+  filter: invert(15%);
+
+}

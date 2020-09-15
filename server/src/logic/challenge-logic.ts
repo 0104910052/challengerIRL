@@ -1,15 +1,10 @@
-import {Challenge} from "../../../entity/Challenge";
-import {ChallengeEntry} from "../../../entity/ChallengeEntry";
+import {Challenge} from "../entity/Challenge";
+import {ChallengeEntry} from "../entity/ChallengeEntry";
 import {calculateEloForNewAdditiveEntry, getAdditiveChallengeRank} from "./additive/entry-additive.logic";
 import {divisions, higherDivisions, MASTER_CUTOFF, MAX_ELO} from "./logic.config";
 
 
-export const getChallengeEntries = async (challengeId: string) => {
 
-    const entries = await  ChallengeEntry.find({ where: {challenge: challengeId}})
-    return entries
-
-}
 
 
 export const calculateEloForNewEntry = (challenge: Challenge, value: number) => {
@@ -18,16 +13,16 @@ export const calculateEloForNewEntry = (challenge: Challenge, value: number) => 
     }
 }
 
+
 export const getChallengeRank = async (challenge: Challenge) => {
     let rank = {}
 
     if(challenge.type === 'additive'){
         rank = await getAdditiveChallengeRank(challenge)
     }
-
     return rank
-
 }
+
 
 export const calculateDivision = (totalElo: number) => {
     const divisionEloRange = MASTER_CUTOFF / divisions.length
@@ -37,7 +32,6 @@ export const calculateDivision = (totalElo: number) => {
 
 
     if(divisionIndex >= divisions.length){
-        console.log('master and higher')
         const masterToChallengerRange = MAX_ELO - MASTER_CUTOFF
         const higherDivisionEloRange = masterToChallengerRange / higherDivisions.length
         const higherDivisionIndex = Math.round( (totalElo - MASTER_CUTOFF) / higherDivisionEloRange)

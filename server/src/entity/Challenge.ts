@@ -35,4 +35,6 @@ export class Challenge extends BaseEntity{
     @Column()
     createdAt: Date;
 
+    division: {}
+
 }

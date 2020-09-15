@@ -12,7 +12,6 @@ const Dashboard = () => {
        dispatch(getChallenges())
     },[])
 
-    console.log(user)
 
     return (
         <div className={'container-fluid dashboard'}>
