@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import delIcon from '../../assets/delete.svg'
 
 interface Challenge {
@@ -9,6 +9,10 @@ interface Challenge {
 const EloHistory: React.FC<Challenge> = ({challengeEntries, onEntryDelete}:Challenge) => {
 
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+
+    useEffect(()=>{
+
+    },[challengeEntries])
 
 
     return (
@@ -33,8 +37,19 @@ const EloHistory: React.FC<Challenge> = ({challengeEntries, onEntryDelete}:Chall
 
                 {   challengeEntries &&
                     challengeEntries.map((entry, i)=>{
+                        let rowBgColor: string
+
+                        if(entry.eloGain > 0){
+                            const percent = entry.eloGain / 2000 * 30
+                            rowBgColor = `rgba(64, 255, 0, ${percent})`
+                        }else{
+                            const percent = (entry.eloGain * -1) / 2000 * 20
+                            rowBgColor = `rgba(255, 0, 0, ${percent})`
+                        }
+
+
                         return (
-                            <tr>
+                            <tr style={{backgroundColor: rowBgColor}}>
                                 <th scope="row">{++i}</th>
                                 <td>{entry.eloGain}</td>
                                 <td>{entry.date && new Date(entry.date).toLocaleDateString("en-US", dateOptions)}</td>

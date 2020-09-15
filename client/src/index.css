@@ -160,5 +160,13 @@ code {
 
 .history-delete-icon:hover{
   filter: invert(15%);
+}
 
+.delete-challenge{
+  cursor: pointer;
+}
+
+.delete-challenge:hover{
+  text-decoration: underline;
+  font-weight: 600;
 }

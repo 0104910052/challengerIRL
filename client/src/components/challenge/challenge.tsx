@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'
-import { useLocation } from 'react-router-dom';
+import {useHistory, useLocation } from 'react-router-dom';
 import {Button, Form, FormFeedback, FormGroup, Input, Label, ListGroup, ListGroupItem} from 'reactstrap';
 import "react-datepicker/dist/react-datepicker.css";
 import RankImage from "../generic/rank-image";
@@ -23,6 +23,7 @@ const Challenge = () => {
         challengeEntries: [{} as any]
     })
     const [challengeId, setChallengeId] = useState('')
+    const history = useHistory()
 
 
     const onSubmit = (entryValue: number, entryDate: Date):void => {
@@ -38,6 +39,14 @@ const Challenge = () => {
             })
     }
 
+    const onChallengeDelete = (challengeId: string) => {
+        axios.delete('http://localhost:4000/challenges/' + challengeId, {withCredentials: true})
+            .then(res=>{
+                if(res.data.success){
+                    history.push('/dashboard')
+                }
+            })
+    }
 
     const onEntryDelete = (entryId: string) => {
         axios.delete('http://localhost:4000/challenges/entry/' + entryId, {withCredentials: true})
@@ -70,7 +79,7 @@ const Challenge = () => {
         <div className={'container-fluid'}>
             <div className={'row'}>
                     <div className={'col-3'}>
-                        <RankImage challenge={challenge} />
+                        <RankImage onChallengeDelete={onChallengeDelete} challenge={challenge} />
                     </div>
                     <div className={'col-4 offset-1 p-0'}>
 

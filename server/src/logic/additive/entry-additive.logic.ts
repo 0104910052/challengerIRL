@@ -14,8 +14,7 @@ export const calculateEloForNewAdditiveEntry = async (challenge: Challenge, valu
     let currentTotalValue:number = +value
 
 
-    entries.forEach((entry, i)=>{
-        console.log('entry value: ', entry.value)
+    entries.forEach((entry)=>{
         currentTotalValue = +entry.value + +currentTotalValue
     })
 
@@ -25,9 +24,9 @@ export const calculateEloForNewAdditiveEntry = async (challenge: Challenge, valu
 
     let elo = currentScore * MAX_ELO
     const eloToReduce = elo * (totalScore / ELO_REDUCTION_RATE)
-    const eloAfterReduction = elo - eloToReduce
+    return Number((elo - eloToReduce).toFixed(2))
 
-    return Math.trunc(eloAfterReduction)
+
 }
 
 const calculateTotalElo = async (challenge: Challenge) => {

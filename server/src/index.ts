@@ -8,6 +8,7 @@ import {addChallenge} from "./routes/challenges/challenge/add-challenge";
 import {getChallenges} from "./routes/challenges/challenge/get-challenges";
 import {addEntry} from "./routes/challenges/entries/add-entry";
 import {removeEntry} from "./routes/challenges/entries/remove-entry";
+import {removeChallenge} from "./routes/challenges/challenge/remove-challenge";
 
 
 const express = require('express')
@@ -75,6 +76,7 @@ const main = async () => {
     getChallenges(app)
     addEntry(app)
     removeEntry(app)
+    removeChallenge(app)
 
 
     if(process.env.production){

@@ -3,10 +3,11 @@ import React, {useEffect, useState} from 'react';
 import border from '../../assets/iron_border.png'
 
 interface Rank {
-    challenge: any
+    challenge: any,
+    onChallengeDelete: (challengeId: string) => void
 }
 
-const RankImage: React.FC<Rank> = ({ challenge }: Rank) => {
+const RankImage: React.FC<Rank> = ({ challenge, onChallengeDelete }: Rank) => {
 
     const [imagePath, setImagePath] = useState('unranked.png')
     const [borderPath, setBorderPath] = useState('unranked_border.png')
@@ -15,6 +16,13 @@ const RankImage: React.FC<Rank> = ({ challenge }: Rank) => {
 
 
     useEffect(()=>{
+
+
+        if(!totalElo || totalElo < 0 || !division){
+            setImagePath('unranked.png')
+            setBorderPath('unranked_border.png')
+        }
+
 
         if(division) {
             if(division !== 'Challenger' && division !== 'Master' && division !== 'GrandMaster'){
@@ -68,6 +76,12 @@ const RankImage: React.FC<Rank> = ({ challenge }: Rank) => {
                             </div>
                             <div>
                                 {new Date(challenge.createdAt).toISOString().slice(0,10)}
+                            </div>
+                            <div>
+                                <b>Actions</b>
+                            </div>
+                            <div onClick={()=> onChallengeDelete(challenge.id)} className={'delete-challenge'}>
+                                Delete
                             </div>
                         </div>
                     </div>

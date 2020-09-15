@@ -10,6 +10,7 @@ export const getChallengeEntries = async (challengeId: string) => {
 export const getChallenge = async (challengeId: string, withEntries?: boolean) => {
     const challenge = await Challenge.findOne({id: challengeId})
     const entries = await getChallengeEntries(challengeId)
+    entries.reverse()
     challenge.division = await getChallengeRank(challenge)
     if(withEntries){
         challenge.challengeEntries = entries

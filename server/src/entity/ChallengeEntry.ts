@@ -17,6 +17,6 @@ export class ChallengeEntry extends BaseEntity{
     @Column()
     date: Date;
 
-    @Column()
+    @Column({type: 'real'})
     eloGain: number;
 }
