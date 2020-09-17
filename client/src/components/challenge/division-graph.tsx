@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import { Doughnut } from 'react-chartjs-2';
-import {Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {calculateDivision} from "../../logic/challenge-logic";
 
 interface Challenge {
@@ -23,7 +22,6 @@ const DivisionGraph: FC<Challenge> = ({challengeEntries, createdAt}: Challenge) 
 
         if(challengeEntries && challengeEntries.length > 0){
             let sortedEntries: Map<string, number> = new Map()
-            challengeEntries.reverse()
             if(challengeEntries.length > 1){
                 for(let i = 0; i < challengeEntries.length; i++){
                     const dateString = new Date(challengeEntries[i].date).toDateString()
@@ -40,13 +38,22 @@ const DivisionGraph: FC<Challenge> = ({challengeEntries, createdAt}: Challenge) 
 
             let sum = 0;
 
+            let dateSortedEntries:{date: Date, value: number}[] = []
+
             sortedEntries.forEach((value, key)=>{
-                plotData.push({
-                    time: new Date(key).toLocaleDateString("en-US", options),
-                    elo: Math.floor((sum + value))
-                })
-                sum += value
+                dateSortedEntries.push({date: new Date(key), value: value})
             })
+
+            dateSortedEntries.sort( (a,b)=>a.date.getTime()- b.date.getTime())
+
+
+            for(let i =0; i < dateSortedEntries.length; i++){
+                plotData.push({
+                    time: dateSortedEntries[i].date.toLocaleDateString("en-US", options),
+                    elo: Math.floor((sum + dateSortedEntries[i].value))
+                })
+                sum += dateSortedEntries[i].value
+            }
             setData(plotData as any)
         }
 
@@ -62,12 +69,7 @@ const DivisionGraph: FC<Challenge> = ({challengeEntries, createdAt}: Challenge) 
                     <AreaChart data={data}>
                         <XAxis dataKey="time" height={80} label={'Date'}/>
                         <YAxis dataKey="elo" tickFormatter={(elo)=>{
-                            const div = calculateDivision(elo)
-                            if(div === 'Unranked'){
-                                return ''
-                            }else{
-                                return div
-                            }
+                            return calculateDivision(elo)
 
                         } } />
                         <Tooltip label={'Days'} />

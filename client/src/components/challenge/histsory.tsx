@@ -11,7 +11,7 @@ const EloHistory: React.FC<Challenge> = ({challengeEntries, onEntryDelete}:Chall
     const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
 
     useEffect(()=>{
-
+        challengeEntries.sort((a,b)=>new Date(a.date).getTime()- new Date(b.date).getTime()).reverse()
     },[challengeEntries])
 
 
@@ -26,10 +26,10 @@ const EloHistory: React.FC<Challenge> = ({challengeEntries, onEntryDelete}:Chall
                 <thead className="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Elo gains</th>
+                    <th scope="col">Elo gain</th>
                     <th scope="col">Date</th>
                     <th scope="col">Value</th>
-                    <th scope="col"></th>
+                    <th scope="col"> </th>
 
                 </tr>
                 </thead>
