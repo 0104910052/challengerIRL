@@ -9,11 +9,12 @@ import {getChallenges} from "./routes/challenges/challenge/get-challenges";
 import {addEntry} from "./routes/challenges/entries/add-entry";
 import {removeEntry} from "./routes/challenges/entries/remove-entry";
 import {removeChallenge} from "./routes/challenges/challenge/remove-challenge";
+require('dotenv').config();
 
 
 const express = require('express')
 const bodyParser = require('body-parser')
-var cors = require('cors');
+const cors = require('cors');
 
 const main = async () => {
 
@@ -22,15 +23,15 @@ const main = async () => {
         type: "postgres",
         host: "localhost",
         port: 5432,
-        username: "postgres",
-        password: "easypass",
-        database: "challenger",
+        username: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
         entities: [
             __dirname + "/entity/*.ts"
         ],
         synchronize: true,
     }).then(connection => {
-        console.log('Connection to database intialized.')
+        console.log('Connection to database initialized.')
     }).catch(error => console.log(error));
 
 
@@ -39,9 +40,7 @@ const main = async () => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
 
-    // app.get('/', (req:any , res: any) =>{
-    //     console.log('re')
-    // })
+
 
     /* Routes */
 
@@ -52,13 +51,15 @@ const main = async () => {
     }))
 
 
+
+
     app.use(
         session({
             store: new pgStore({
-                conString: "postgres://postgres:easypass@localhost:5432/challenger"
+                conString: `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@localhost:5432/${process.env.DB_NAME}`
             }),
             name: 'qid',
-            secret: 'Giga secret',
+            secret: process.env.SESSION_SECRET,
             resave: false,
             saveUninitialized: false,
             cookie: {
@@ -79,8 +80,6 @@ const main = async () => {
     removeChallenge(app)
 
 
-    if(process.env.production){
-    }
 
 
     app.listen( 4000, () => {

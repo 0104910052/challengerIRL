@@ -7,6 +7,7 @@ import RankImage from "../generic/rank-image";
 import EloHistory from './histsory';
 import InputValue from "./input-value";
 import DivisionGraph from "./division-graph";
+import {apiUri} from "../../env_config";
 
 const Challenge = () => {
 
@@ -29,7 +30,7 @@ const Challenge = () => {
     const onSubmit = (entryValue: number, entryDate: Date):void => {
         // e.preventDefault()
 
-        axios.post('http://localhost:4000/challenges', {challengeId, value: entryValue, date: entryDate}, {withCredentials: true})
+        axios.post(apiUri + 'challenges', {challengeId, value: entryValue, date: entryDate}, {withCredentials: true})
             .then(res=>{
                 setChallenge(res.data.challenge)
                 console.log(res.data)
@@ -40,7 +41,7 @@ const Challenge = () => {
     }
 
     const onChallengeDelete = (challengeId: string) => {
-        axios.delete('http://localhost:4000/challenges/' + challengeId, {withCredentials: true})
+        axios.delete(apiUri + 'challenges/' + challengeId, {withCredentials: true})
             .then(res=>{
                 if(res.data.success){
                     history.push('/dashboard')
@@ -49,7 +50,7 @@ const Challenge = () => {
     }
 
     const onEntryDelete = (entryId: string) => {
-        axios.delete('http://localhost:4000/challenges/entry/' + entryId, {withCredentials: true})
+        axios.delete(apiUri + 'challenges/entry/' + entryId, {withCredentials: true})
             .then(res=>{
                 if(res.data.success){
                     setChallenge(res.data.challenge)
@@ -61,7 +62,7 @@ const Challenge = () => {
     useEffect(()=>{
         const challengeId = location.pathname.split('/')[2]
         setChallengeId(challengeId)
-        axios.get('http://localhost:4000/challenges/' + challengeId, {withCredentials: true})
+        axios.get(apiUri + 'challenges/' + challengeId, {withCredentials: true})
             .then(res=>{
                 if(res.data.success){
                     console.log(res.data.challenge)

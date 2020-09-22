@@ -4,6 +4,7 @@ import axios from 'axios'
 import { addChallenge } from '../../store/userSlice';
 import {useDispatch} from "react-redux";
 import { useHistory } from 'react-router-dom';
+import {apiUri} from "../../env_config";
 
 const AddChallenge = () => {
 
@@ -35,7 +36,7 @@ const AddChallenge = () => {
 
     const onSubmit = (e: any) => {
         e.preventDefault()
-        axios.post('http://localhost:4000/challenges/add', {title, type: type.value, cutoff}, {withCredentials: true})
+        axios.post(apiUri + 'challenges/add', {title, type: type.value, cutoff}, {withCredentials: true})
             .then(res=>{
                 if(res.data.success){
                     dispatch(addChallenge(res.data.challenge))

@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 import { login } from '../../store/authSlice';
 import {getUserData, setUser} from "../../store/userSlice";
 import { useHistory } from 'react-router-dom';
+import {apiUri} from "../../env_config";
 
 
 const Login = () => {
@@ -32,7 +33,7 @@ const Login = () => {
 
     const handleSubmit = (e:any) =>{
         e.preventDefault()
-        axios.post('http://localhost:4000/auth/login', {mail: mail, password: password}, {withCredentials: true})
+        axios.post(apiUri + 'auth/login', {mail: mail, password: password}, {withCredentials: true})
             .then((res)=>{
                 if(res.data.success){
                     dispatch(login())

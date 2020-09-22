@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import {setUser} from "../../store/userSlice";
 import {useCookies} from "react-cookie";
+import {apiUri} from "../../env_config";
 
 
 
@@ -37,7 +38,7 @@ const Register = () => {
     const handleSubmit = (e:any) =>{
         e.preventDefault()
         removeCookie('qid')
-        axios.post('http://localhost:4000/auth/register', {name: fullName, mail, password}, {withCredentials: true} )
+        axios.post(apiUri + 'auth/register', {name: fullName, mail, password}, {withCredentials: true} )
             .then((res)=>{
                 console.log(res.data)
                 if(res.data.success){
