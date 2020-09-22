@@ -33,9 +33,9 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -61,6 +61,8 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/react-vis": "^1.11.3",
     "@types/reactstrap": "^8.5.1",
-    "@types/recharts": "^1.8.15"
+    "@types/recharts": "^1.8.15",
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.1.6"
   }
 }

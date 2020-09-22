@@ -7,7 +7,7 @@ import {selectAuth} from "./store/authSlice";
 import { getUserData } from './store/userSlice';
 import {  useDispatch } from 'react-redux';
 import {BrowserRouter as DomRouter} from 'react-router-dom';
-
+import * as test from '../../shared/calculate-division'
 
 
 function App() {
@@ -20,6 +20,8 @@ function App() {
 
 
     useEffect(()=>{
+        console.log(test.calculateDivision(300))
+
         if(!auth.isAuthed && authCookie.qid){
             dispatch(getUserData())
         }

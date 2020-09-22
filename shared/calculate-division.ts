@@ -1,17 +1,12 @@
 import {divisions, higherDivisions, MASTER_CUTOFF, MAX_ELO} from "./logic.config";
 
-
-
-
 export const calculateDivision = (elo: number) => {
-
 
     const divisionEloRange = MASTER_CUTOFF / divisions.length
 
-    if(elo < divisionEloRange) {
-        return 'Iron IV'
+    if(elo < (divisionEloRange / 4)) {
+        return 'Unranked'
     }
-
 
     const divisionIndex = Math.round(elo / divisionEloRange) - 1
     let division: string
@@ -33,5 +28,6 @@ export const calculateDivision = (elo: number) => {
     }else{
         division = divisions[divisionIndex]
     }
+
     return division
 }

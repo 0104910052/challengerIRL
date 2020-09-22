@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-import {calculateDivision} from "../../logic/challenge-logic";
+import {calculateDivision} from "../../../../shared/calculate-division";
 
 interface Challenge {
     challengeEntries: any[];

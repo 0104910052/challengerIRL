@@ -1,7 +1,6 @@
 import {Challenge} from "../entity/Challenge";
-import {ChallengeEntry} from "../entity/ChallengeEntry";
 import {calculateEloForNewAdditiveEntry, getAdditiveChallengeRank} from "./additive/entry-additive.logic";
-import {divisions, higherDivisions, MASTER_CUTOFF, MAX_ELO} from "./logic.config";
+import {calculateEloForNewRecurringEntry} from "./recurring/entry-recurring";
 
 
 
@@ -10,6 +9,9 @@ import {divisions, higherDivisions, MASTER_CUTOFF, MAX_ELO} from "./logic.config
 export const calculateEloForNewEntry = (challenge: Challenge, value: number) => {
     if(challenge.type === 'additive'){
         return calculateEloForNewAdditiveEntry(challenge, value)
+    }
+    if(challenge.type === 'recurring'){
+        return calculateEloForNewRecurringEntry(challenge, value)
     }
 }
 
@@ -20,40 +22,10 @@ export const getChallengeRank = async (challenge: Challenge) => {
     if(challenge.type === 'additive'){
         rank = await getAdditiveChallengeRank(challenge)
     }
+    // if(challenge.type === 'recurring'){
+    //     rank = await getRecurringChallengeRank(challenge)
+    // }
     return rank
 }
 
 
-export const calculateDivision = (elo: number) => {
-
-
-
-    const divisionEloRange = MASTER_CUTOFF / divisions.length
-
-    if(elo < (divisionEloRange / 4)) {
-        return 'Unranked'
-    }
-
-    const divisionIndex = Math.round(elo / divisionEloRange) - 1
-    let division: string
-
-
-
-    if(divisionIndex >= divisions.length){
-        const masterToChallengerRange = MAX_ELO - MASTER_CUTOFF
-        const higherDivisionEloRange = masterToChallengerRange / higherDivisions.length
-        const higherDivisionIndex = Math.round( (elo - MASTER_CUTOFF) / higherDivisionEloRange)
-
-        if(higherDivisionIndex < higherDivisions.length){
-            division = higherDivisions[higherDivisionIndex]
-        }else{
-            division = higherDivisions[higherDivisions.length - 1]
-        }
-
-
-    }else{
-        division = divisions[divisionIndex]
-    }
-
-    return division
-}

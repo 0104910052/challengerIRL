@@ -1,7 +1,7 @@
 import {Challenge} from "../../entity/Challenge";
-import {ELO_REDUCTION_RATE, MAX_ELO} from "../logic.config";
-import {calculateDivision} from "../challenge-logic";
+import {ELO_REDUCTION_RATE, MAX_ELO} from "../../../../shared/logic.config";
 import {getChallengeEntries} from "../challenge-general";
+import {calculateDivision} from "../../../../shared/calculate-division";
 
 
 const getScore = (currentTotalValue: number, maxValue: number) => {
@@ -25,8 +25,6 @@ export const calculateEloForNewAdditiveEntry = async (challenge: Challenge, valu
     let elo = currentScore * MAX_ELO
     const eloToReduce = elo * (totalScore / ELO_REDUCTION_RATE)
     return Number((elo - eloToReduce).toFixed(2))
-
-
 }
 
 const calculateTotalElo = async (challenge: Challenge) => {

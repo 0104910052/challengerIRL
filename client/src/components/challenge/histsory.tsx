@@ -19,7 +19,6 @@ const EloHistory: React.FC<Challenge> = ({challengeEntries, onEntryDelete}:Chall
         <div className="col-12">
             <div className={'mt-5'}>
                 <h2>History</h2>
-
             </div>
             <table className="table mt-4">
 

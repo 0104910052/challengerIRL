@@ -1,6 +1,6 @@
 import { Request, Response, Application } from 'express';
 import { getUserChallenges } from '../../user.route';
-import {calculateDivision, getChallengeRank} from "../../../logic/challenge-logic";
+import { getChallengeRank} from "../../../logic/challenge-logic";
 import {getChallenge} from "../../../logic/challenge-general";
 
 
